@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface User {
   name?: string;
@@ -11,7 +12,22 @@ const user: User = {
 };
 
 function App() {
-  return <div>{user.name}</div>;
+  const [data, setData] = useState('');
+  console.log('Loading');
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/').then((res: any): void => {
+      console.log('fetching');
+      setData(res.data);
+    });
+  }, []);
+
+  return (
+    <div>
+      <div>{data}</div>
+      <div>{user.name}</div>
+    </div>
+  );
 }
 
 export default App;
